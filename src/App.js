@@ -16,38 +16,44 @@ class App extends React.Component{
     };
     // Allows reference to this.loadBlockChain
     this.loadBlockChain = this.loadBlockChain.bind(this);
-}
+  }
 
-async loadBlockChain() {
-  // Load in Web3 Connection
-  const web3 = new Web3(Web3.givenProvider || 'http://localhost:3000')
+  async loadBlockChain() {
+    // Load in Web3 Connection
+    const web3 = new Web3(Web3.givenProvider || 'http://localhost:3000')
 
-  // Get data from Metamask
-  const userNetwork = await web3.eth.net.getNetworkType();
-  const accounts = await web3.eth.getAccounts()
+    // Get data from Metamask
+    const userNetwork = await web3.eth.net.getNetworkType();
+    const accounts = await web3.eth.getAccounts()
 
-  // Update state with Metamask info
-  this.setState({network: userNetwork})
-  this.setState({account: accounts[0]})
+    // Update state with Metamask info
+    this.setState({network: userNetwork})
+    this.setState({account: accounts[0]})
 
-  console.log("Connected to Metamask");
-  console.log("Account is: " + this.state.account);
-}
+    console.log("Connected to Metamask");
+    console.log("Account is: " + this.state.account);
+  }
 
-function App() {
-  return (
-    <div>
-      <h1>My first programming with a blockchain</h1>
-      <div className="buttons">
-        <button id="loginButton" onClick={this.loadBlockChain}>
-          Connect to Metamask
-        </button>
-        <button id="transactionButton">
-          Receive a token
-        </button>
+  render() {
+    return (
+      <div>
+        <h1>My first programming with a blockchain</h1>
+        <div className="buttons">
+          <button id="loginButton" onClick={this.loadBlockChain}>
+            Connect to Metamask
+          </button>
+          <button id="transactionButton">
+            Receive a token
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
+
+ReactDOM.render(
+  <App />,
+  document.getElementById("root")
+);
 
 export default App;
