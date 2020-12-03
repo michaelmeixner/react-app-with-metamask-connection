@@ -34,6 +34,34 @@ class App extends React.Component{
     console.log("Account is: " + this.state.account);
   }
 
+  onClickTransaction = () => {
+    // Adventure API address
+    const APIaddress =  "http://13.56.163.182:8000/transfer-token";
+
+    console.log("transaction to: " + this.state.account);
+
+    // Access API for transaction
+
+    fetch(APIaddress, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ticker: "HOTPOTATO",
+        amount: 1,
+        to: this.state.account,
+        hookUrl: "test",
+      }),
+    })
+    .then(function (response){
+        console.log(response)
+    })
+    .catch(function (error){
+        console.log(error)
+    });
+  }
+
   render() {
     return (
       <div>
@@ -42,9 +70,16 @@ class App extends React.Component{
           <button id="loginButton" onClick={this.loadBlockChain}>
             Connect to Metamask
           </button>
-          <button id="transactionButton">
+          <button id="transactionButton" onClick={this.onClickTransaction}>
             Receive a token
           </button>
+        </div>
+        <div>
+          <p>
+            Your account: {this.state.account}
+            <br></br>
+            Network: {this.state.network}
+          </p>
         </div>
       </div>
     );
